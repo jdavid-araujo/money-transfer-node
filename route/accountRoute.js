@@ -1,10 +1,31 @@
 const express = require('express');
-const { body } = require('express-validator/check');
+const { body, param } = require('express-validator');
 
 const accountController = require('../controller/accountController');
 
 const router = express.Router();
 
-router.post('/accounts', accountController.createAccount);
+router.get('', accountController.getAccounts);
+
+router.get('/:id', 
+[
+    param('id')
+        .notEmpty()
+        .withMessage('This value must not be empty')
+],
+accountController.getAccountsById);
+
+router.post('',
+[
+    body('owner')
+        .notEmpty()
+        .withMessage('This value must not be empty'),
+    body('balance')
+        .isDecimal({ decimal_digits: 2 })
+        .withMessage('Only permi 2 decimal digits')
+        .notEmpty()
+        .withMessage('This value must not be empty')
+],
+ accountController.createAccount);
 
 module.exports = router;
