@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const accountRoute = require('./route/accountRoute');
 
 const app = express();
-
+/*
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -27,12 +27,16 @@ app.use((error, req, res, next) => {
     const data = error.data;
     res.status(status).json({ message: message, data: data });
 });
+*/
 
 mongoose
   .connect(
-    'mongodb://david-araujo:oieAf3bN2FZla0yj@money-transfer-node-ujhsl.mongodb.net/test?retryWrites=true&w=majority'
+    "mongodb+srv://david-araujo:test@money-transfer-node-ujhsl.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(result => {
-    app.listen(8080);
+    console.log(result)
+    //app.listen(8080);
   })
   .catch(err => console.log(err));
+
+app.listen(8080);
